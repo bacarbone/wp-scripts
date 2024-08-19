@@ -1,0 +1,19 @@
+{
+    "name": "css-to-theme",
+    "version": "1.0.6",
+    "description": "A package to update WordPress theme.json file from CSS files, including variations",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": ["css", "wordpress", "theme", "watcher", "variations"],
+    "author": "bacarbone",
+    "license": "MIT",
+    "dependencies": {
+        "css": "^3.0.0",
+        "chokidar": "^3.5.3"
+    },
+    "bin": {
+        "css-to-theme": "./index.js"
+    }
+}
