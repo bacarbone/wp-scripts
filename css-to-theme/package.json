@@ -1,6 +1,6 @@
 {
     "name": "css-to-theme",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "A package to update WordPress theme.json file from CSS files, including variations",
     "main": "index.js",
     "scripts": {

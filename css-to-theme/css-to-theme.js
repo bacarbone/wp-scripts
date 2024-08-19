@@ -27,13 +27,21 @@ function updateTheme(cssPath, themeFile) {
                     const rawCss = css.parse(fs.readFileSync(filePath, "utf8"));
                     const stringifiedCss = css.stringify(rawCss, { compress: true });
 
-                    theme.styles.blocks[`core/${fileName}`] = {
-                        css: stringifiedCss
-                    };
+                    if(!theme.styles.blocks[`core/${fileName}`]){
+                        theme.styles.blocks[`core/${fileName}`] = {};
+                    }
+
+                    theme.styles.blocks[`core/${fileName}`].css = stringifiedCss;
+
+
                 }
             });
-            fs.writeFileSync(themeFile, JSON.stringify(theme, null, 2));
-            console.log(`${new Date().toLocaleTimeString()}: Updated theme`);
+
+            if(checkJsonDiff(themeFile, theme)){
+                fs.writeFileSync(themeFile, JSON.stringify(theme, null, "\t"));
+                console.log(`[${new Date().toLocaleTimeString()}]: Updated theme`);
+            }
+            
         }else{
             console.log(`Folder ${cssPath} doesn't exist`);
         }
@@ -62,8 +70,10 @@ function updateVariations(variationsPath) {
                     }
                     jsonContent.styles.css = stringifiedCss;
 
-                    fs.writeFileSync(jsonFilePath, JSON.stringify(jsonContent, null, 2));
-                    console.log(`[${new Date().toLocaleTimeString()}]: Updated variation: ${fileName}`);
+                    if(checkJsonDiff(jsonFilePath, jsonContent)){
+                        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonContent, null, "\t"));
+                        console.log(`[${new Date().toLocaleTimeString()}]: Updated variation: ${fileName}`);
+                    }
                 }else{
                     console.log(`No JSON file found for variation: ${fileName}`);
                 }
@@ -72,6 +82,14 @@ function updateVariations(variationsPath) {
     }
 }
 
+function checkJsonDiff(filePath, newJson) {
+    let diff = false;
+    if (fs.existsSync(filePath)) {
+        const oldJson = JSON.parse(fs.readFileSync(filePath, "utf8"));
+        diff = JSON.stringify(oldJson) !== JSON.stringify(newJson);
+    }
+    return diff;
+}
 
 function updateThemeFiles(cssPath, themeFile, variationsPath) {
     updateTheme(cssPath, themeFile, variationsPath);
