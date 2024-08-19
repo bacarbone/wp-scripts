@@ -1,12 +1,24 @@
 # CSS to Theme
 
-This package updates a WordPress theme.json file from CSS files, including variations. It can watch for changes and update the theme files automatically.
+The goal of this project is to provide a more efficient way to manage CSS with new block themes in WordPress. 
+
+The tool watches for changes in CSS files and updates the corresponding block styles in the theme.json file.
+
+It also updates the `css` property of variation JSON files when the corresponding CSS file is changed.
 
 ## Installation
 
 ```bash
 npm install --save-dev css-to-theme
 ```
+
+## Features
+
+- Watch for changes in CSS files and update block styles in the theme.json file.
+  - You have to name your CSS files after the block name (e.g., `core/paragraph.css`).
+- Monitor changes in variation CSS files and update the `css` property in the corresponding JSON file.
+  - Variation CSS files should have the same name as the JSON file (e.g., `call-to-action-group.css` and `call-to-action-group.json`).
+
 
 ## Usage
 
@@ -42,14 +54,6 @@ Example:
 ```bash
 css-to-theme CSS_PATH=./custom/css/path VARIATIONS_PATH=./custom/variations/path 
 ```
-
-## How it works
-
-1. The tool monitors the specified CSS directory and variations directory for changes.
-2. When a change is detected in the CSS directory, it updates the corresponding block styles in the theme.json file.
-3. When a change is detected in the variations directory:
-   - If a CSS file is changed, it looks for a corresponding JSON file with the same name.
-   - If found, it updates the `css` property of the JSON file with the contents of the CSS file.
 
 ## License
 
